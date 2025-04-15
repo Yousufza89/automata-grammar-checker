@@ -1,0 +1,30 @@
+def parse_S(tokens):
+    remainder = parse_NP(tokens)
+    if remainder is None:
+        return None
+    return parse_VP(remainder)
+
+def parse_NP(tokens):
+    if tokens and tokens[0] in ["a", "the"]:
+        tokens = tokens[1:]
+        if tokens and tokens[0] in ["boy", "girl"]:
+            return tokens[1:]
+    return None
+
+def parse_VP(tokens):
+    if tokens and tokens[0] == "sees":
+        tokens = tokens[1:]
+        return parse_NP(tokens)
+    return None
+
+def main():
+    sentence = input().strip().lower()
+    tokens = sentence.split()
+    remainder = parse_S(tokens)
+    if remainder == []:
+        print("Valid")
+    else:
+        print("Invalid")
+
+if __name__ == "__main__":
+    main()
